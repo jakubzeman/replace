@@ -6,6 +6,10 @@ TEST_VALS=(
 "First. Second. First\n"
 "Hi I'm \nJakub. Hi \nI'm Jakub.\n"
 "Skakal pes          pres oves. Skakal pes pres oves.\n"
+"Skakal pes pres oves. Skakal pes pres oves."
+"Skakal pes pres oves.Skakal pes pres oves."
+"Skakal pes pres oves!Skakal pes pres oves?"
+"Ahoj Ahoj"
 )
 CORR_VALS=(
 "Skakal pes přes oves.\n"
@@ -14,6 +18,10 @@ CORR_VALS=(
 "First. Second. First\n"
 "Hi I'm \nJakub. \n"
 "Skakal pes pres oves. \n"
+"Skakal pes pres oves. "
+"Skakal pes pres oves.Skakal pes pres oves."
+"Skakal pes pres oves!Skakal pes pres oves?"
+"Ahoj "
 )
 
 IDX=1
