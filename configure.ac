@@ -29,8 +29,7 @@ AC_SUBST(PLATFORM)
 AC_CONFIG_MACRO_DIRS([m4])
 
 # Boost dep
-AX_BOOST_BASE([1.48],, [AC_MSG_ERROR([This program needs Boost, but it was not found in your system])])
-AX_BOOST_SYSTEM
+AX_BOOST_BASE
 
 # Checks for programs.
 AC_PROG_CXX

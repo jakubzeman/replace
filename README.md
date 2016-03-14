@@ -11,13 +11,12 @@ Replaces duplicities in common text for better readability.
 - Installed g++ make and boost
 - Example of necessary packages for Ubuntu/Debian:
 ```
-apt-get install build-essential autoconf automake pkg-config libtoolize
+apt-get install build-essential autoconf automake pkg-config libtool libboost-dev
 ```
 
 ## How to build it
 ```
 ./autogen
-./configure
 make
 ```
 

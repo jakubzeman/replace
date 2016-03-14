@@ -53,7 +53,6 @@ void Replace::processOneWord(const std::string & word)
     }
     else {
         if (this->dupbuf.empty()) {
-            std::cout << "<" << word << ">" << std::endl;
             size_t pos = this->readbuf.find(word);
             if (pos == std::string::npos) {
                 this->readbuf += word;
@@ -76,7 +75,6 @@ void Replace::processOneWord(const std::string & word)
             this->unroll.push_back(word);
             size_t pos = this->readbuf.find(this->dupbuf);
             if (pos == std::string::npos) {
-                std::cout << "FCK <" << this->dupbufwithsep << ">" << std::endl;
                 this->readbuf += this->unrollFirst;
                 this->outbuf += this->unrollFirst;
                 this->dupbuf = "";
@@ -90,7 +88,6 @@ void Replace::processOneWord(const std::string & word)
                 }
             }
             else if (pos + this->dupbuf.length() == this->readbuf.length()) {
-                std::cout << "Clean up <" << this->dupbufwithsep << ">" << std::endl;
                 this->dupbuf = "";
                 this->dupbufwithsep = "";
                 this->unrollFirst = "";
@@ -125,8 +122,6 @@ void Replace::replace()
     }
     this->outputFile << this->outbuf;
     if (!this->dupbufwithsep.empty()) {
-        std::cout << "Hola <" << this->dupbuf << ">" << std::endl;
-        std::cout << "Hola <" << this->readbuf << ">" << std::endl;
         this->outputFile << this->dupbufwithsep;
     }
 }
