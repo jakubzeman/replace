@@ -6,22 +6,30 @@
 #include <vector>
 #include "options.hpp"
 
+struct ReadBuffer {
+    std::string noSep; // buffer without separators
+    std::string output; // buffer with separators
+
+};
+
 class Replace {
     static const std::string WORD_SEPARATORS;
     std::ifstream inputFile;
     std::ofstream outputFile;
 
-    std::string readbuf;
-    std::string outbuf;
-    std::string dupbuf;
-    std::string dupbufwithsep;
+    struct ReadBuffer readBuffer;
+    struct ReadBuffer compareBuffer;
 
-    std::string unrollFirst;
-    std::vector <std::string> unroll;
+    std::string rollBackBufferFirst;
+    std::vector <std::string> rollBackBuffer;
 
-    void processOneLine(const std::string & line);
+    void processFile(const std::string & file);
     void processOneWord(const std::string & word);
     bool isSeparator(const std::string & word);
+    void processStartup(const std::string & word);
+    void processSeparator(const std::string & word);
+    void cleanUpWhenNoDuplicity();
+    void cleanUpWhenDuplicityFound();
 public:
 
     Replace(const Options & options);
