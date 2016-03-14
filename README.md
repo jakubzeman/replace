@@ -12,6 +12,7 @@ Replaces duplicities in common text for better readability.
 
 ## How to build it
 ```
+./autogen
 ./configure
 make
 ```
