@@ -9,6 +9,10 @@ Replaces duplicities in common text for better readability.
 ## Prerequisities:
 - Linux, Mac OS X or cygwin
 - Installed g++ make and boost
+- Example of necessary packages for Ubuntu/Debian:
+```
+apt-get install build-essential autoconf automake pkg-config libtoolize
+```
 
 ## How to build it
 ```
