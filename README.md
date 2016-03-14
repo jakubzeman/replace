@@ -20,3 +20,8 @@ make
 ```
 ./test.sh
 ```
+
+## Usage
+```
+./replace <path to input text file> <path to output file name>
+```
