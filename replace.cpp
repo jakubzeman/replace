@@ -60,6 +60,7 @@ void Replace::processStartup(const std::string & word)
     }
     else if (pos + word.length() == this->readBuffer.noSep.length()) {
         // In case it reached the end of already read buffer then it's a duplicity and we can skip it.
+        std::cout << "Duplicity found: <" << word << ">" << std::endl;
         this->cleanUpWhenDuplicityFound();
     }
     else {
@@ -80,6 +81,9 @@ void Replace::cleanUpWhenNoDuplicity() {
 
 void Replace::cleanUpWhenDuplicityFound() 
 {
+    if (!this->compareBuffer.output.empty()) {
+        std::cout << "Duplicity found: <" << this->compareBuffer.output << ">" << std::endl;
+    }
     this->compareBuffer.noSep = "";
     this->compareBuffer.output = "";
     this->rollBackBufferFirst = "";
