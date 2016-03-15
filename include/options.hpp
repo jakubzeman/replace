@@ -5,7 +5,8 @@
 class Options {
     std::string inputFileName;
     std::string outputFileName;
-    std::string programName;
+    std::string separators;
+    bool printDuplicities;
 public:
     Options(int argc, char *argv[]);
     const std::string & getInputFileName() const {return this->inputFileName;}
