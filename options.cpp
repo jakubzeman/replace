@@ -13,8 +13,8 @@ Options::Options(int argc, char *argv[])
         ("help", "Print usage")
         ("print-duplicities,p", po::value<bool>(), "Enables print of duplicities to stdout")
         ("separators,s", po::value<std::string>(), "Set separators. Default values are \" \\n\"")
-        ("input-file", po::value<std::string>(&this->inputFileName)->required(), "Path to input file")
-        ("output-file", po::value<std::string>(&this->outputFileName)->required(), "Path to output file")
+        ("input-file", po::value<std::string>(&this->inputFileName)->required(), "Path to input file - mandatory option")
+        ("output-file", po::value<std::string>(&this->outputFileName)->required(), "Path to output file - mandatory option")
     ;
     po::positional_options_description positionalOptions;
     positionalOptions.add("input-file", 1);
@@ -42,8 +42,13 @@ Options::Options(int argc, char *argv[])
         exit(1);
     }
 
-    //this->inputFileName = vm["input-file"];
-    //this->outputFileName = vm["output-file"];
+    if (this->inputFileName.empty() || this->outputFileName.empty()) {
+        std::cerr << "Required args are missing" << std::endl << std::endl;
+        this->printHelp();
+        std::cout << desc << std::endl;
+        exit(1);
+    }
+
     if (vm.count("separators")) {
         this->separators = vm["separators"].as<std::string>();
     }
