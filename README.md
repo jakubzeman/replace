@@ -8,12 +8,14 @@ Replaces duplicities in common text for better readability.
 
 ## Prerequisities:
 - Linux, Mac OS X or cygwin
+
 ### Automake build
 - Installed g++, make, automake, autoconf and boost
 - Example of necessary packages for Ubuntu/Debian:
 ```
 apt-get install build-essential g++ autoconf automake pkg-config libtool libboost-dev autoconf-archive libboost-program-options-dev libboost-system-dev libboost-filesystem-dev
 ```
+
 ### cmake build
 - Installed g++, cmake and boost
 - Example of necessary packages for Ubuntu/Debian:
@@ -22,11 +24,13 @@ apt-get install build-essential g++ cmake libboost-dev autoconf-archive libboost
 ```
 
 ## How to build it
+
 ### Automake
 ```
 ./autogen
 make
 ```
+
 ### cmake
 ```
 cmake .
