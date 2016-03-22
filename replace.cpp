@@ -1,10 +1,8 @@
 #include "replace.hpp"
-#include <iostream>
-#include <stdlib.h>
 #include <boost/tokenizer.hpp>
 #include <boost/foreach.hpp>
 
-const std::string Replace::WORD_SEPARATORS = " \n";
+std::string Replace::WORD_SEPARATORS = " \n";
 
 Replace::Replace(const Options & options)
 {
@@ -17,6 +15,8 @@ Replace::Replace(const Options & options)
     if (!this->outputFile.is_open()) {
         std::cerr << "Cannot open " << options.getOutputFileName() << std::endl;
     }
+    WORD_SEPARATORS = options.getSeparators();
+    this->printDuplicities = options.printDuplicitiesEnabled();
 }
 
 Replace::~Replace()
@@ -29,10 +29,7 @@ Replace::~Replace()
 
 bool Replace::isSeparator(const std::string & word)
 {
-    if (1 == word.length() && std::string::npos != WORD_SEPARATORS.find(word))
-        return true;
-    else
-        return false;
+    return 1 == word.length() && std::string::npos != WORD_SEPARATORS.find(word);
 }
 
 void Replace::processSeparator(const std::string & word)
@@ -60,7 +57,7 @@ void Replace::processStartup(const std::string & word)
     }
     else if (pos + word.length() == this->readBuffer.noSep.length()) {
         // In case it reached the end of already read buffer then it's a duplicity and we can skip it.
-        std::cout << "Duplicity found: <" << word << ">" << std::endl;
+        if (this->printDuplicities) std::cout << "Duplicity found: <" << word << ">" << std::endl;
         this->cleanUpWhenDuplicityFound();
     }
     else {
@@ -81,7 +78,7 @@ void Replace::cleanUpWhenNoDuplicity() {
 
 void Replace::cleanUpWhenDuplicityFound() 
 {
-    if (!this->compareBuffer.output.empty()) {
+    if (!this->compareBuffer.output.empty() && this->printDuplicities) {
         std::cout << "Duplicity found: <" << this->compareBuffer.output << ">" << std::endl;
     }
     this->compareBuffer.noSep = "";
@@ -113,9 +110,9 @@ void Replace::processOneWord(const std::string & word)
                 this->cleanUpWhenNoDuplicity();
                 
                 // Process next words in the buffer again
-                std::vector <std::string> rollBackBufferCopy(this->rollBackBuffer);
+                const std::vector <std::string> rollBackBufferCopy(this->rollBackBuffer);
                 this->rollBackBuffer.clear();
-                BOOST_FOREACH(std::string retryWord, rollBackBufferCopy) {
+                BOOST_FOREACH(const std::string & retryWord, rollBackBufferCopy) {
                     processOneWord(retryWord);
                 }
             }
@@ -129,10 +126,10 @@ void Replace::processOneWord(const std::string & word)
 
 void Replace::processFile(const std::string & file)
 {
-    boost::char_separator<char> sep("", WORD_SEPARATORS.c_str());
-    boost::tokenizer<boost::char_separator<char> > words(file, sep);
+    const boost::char_separator<char> sep("", WORD_SEPARATORS.c_str());
+    const boost::tokenizer<boost::char_separator<char> > words(file, sep);
 
-    BOOST_FOREACH(std::string word, words) {
+    BOOST_FOREACH(const std::string & word, words) {
         this->processOneWord(word);
     }
 }

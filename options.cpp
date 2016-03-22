@@ -1,50 +1,67 @@
 #include "options.hpp"
 #include <iostream>
-#include <stdlib.h>
 #include "boost/program_options.hpp"
 #include "boost/filesystem.hpp"
+
 
 Options::Options(int argc, char *argv[])
 {
     std::string appName = boost::filesystem::basename(argv[0]);
-    namespace po = boost::program_options;
-    po::options_description desc("Allowed options");
+    boost::program_options::options_description desc("Allowed options");
     desc.add_options()
         ("help", "Print usage")
-        ("print-duplicities,p", po::value<bool>(), "Enables print of duplicities to stdout")
-        ("separators,s", po::value<std::string>(), "Set separators. Default values are \" \\n\"")
-        ("input-file", po::value<std::string>(&this->inputFileName)->required(), "Path to input file - mandatory option")
-        ("output-file", po::value<std::string>(&this->outputFileName)->required(), "Path to output file - mandatory option")
+        ("print-duplicities,p", boost::program_options::bool_switch()->default_value(false), "Enables print of duplicities to stdout")
+        ("separators,s", boost::program_options::value<std::string>(), "Set separators. Default values are \" \\n\"")
+        ("input-file", boost::program_options::value< std::vector<std::string> >(), "Path to input file - mandatory argument")
+        ("output-file", boost::program_options::value< std::vector<std::string> >(), "Path to output file - mandatory argument")
     ;
-    po::positional_options_description positionalOptions;
+    boost::program_options::variables_map vm;
+    boost::program_options::positional_options_description positionalOptions;
     positionalOptions.add("input-file", 1);
     positionalOptions.add("output-file", 1);
-    po::variables_map vm;
 
     try {
-        po::store(po::command_line_parser(argc, argv).options(desc).positional(positionalOptions).run(), vm);
+        boost::program_options::store(
+                boost::program_options::command_line_parser(argc, (const char *const *) argv).
+                        options(desc).
+                        positional(positionalOptions).
+                        run(),
+                vm
+        );
         if (vm.count("help")) {
-            this->printHelp();
+            this->printHelp(appName);
             std::cout << desc << std::endl;
             exit(0);
+        }
+        if (vm.count("input-file")) {
+            this->inputFileName = vm["input-file"].as< std::vector<std::string> >()[0];
+        }
+        if (vm.count("output-file")) {
+            this->outputFileName = vm["output-file"].as< std::vector<std::string> >()[0];
         }
     }
     catch (boost::program_options::required_option& e) {
         std::cerr << "Option ERROR: " << e.what() << std::endl << std::endl;
-        this->printHelp();
+        this->printHelp(appName);
         std::cout << desc << std::endl;
         exit(1);
     }
     catch (boost::program_options::error& e) {
         std::cerr << "Option ERROR: " << e.what() << std::endl << std::endl;
-        this->printHelp();
+        this->printHelp(appName);
         std::cout << desc << std::endl;
         exit(1);
     }
 
-    if (this->inputFileName.empty() || this->outputFileName.empty()) {
-        std::cerr << "Required args are missing" << std::endl << std::endl;
-        this->printHelp();
+    if (this->inputFileName.empty()) {
+        std::cerr << "Input file is missing" << std::endl << std::endl;
+        this->printHelp(appName);
+        std::cout << desc << std::endl;
+        exit(1);
+    }
+    if (this->outputFileName.empty()) {
+        std::cerr << "Output file is missing" << std::endl << std::endl;
+        this->printHelp(appName);
         std::cout << desc << std::endl;
         exit(1);
     }
@@ -63,8 +80,8 @@ Options::Options(int argc, char *argv[])
     }
 }
 
-void Options::printHelp()
+void Options::printHelp(const std::string & appName)
 {
-    std::cout << "Search in the text file for all word or sentence duplicities, removes them and saves the text to output file" << std::endl; 
+    std::cout << "Search in the text file for all word or sentence duplicities, removes them and saves the text to output file" << std::endl;
+    std::cout << "Usage: " << appName << " [options]" << std::endl;
 }
-

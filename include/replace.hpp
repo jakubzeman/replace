@@ -13,7 +13,8 @@ struct ReadBuffer {
 };
 
 class Replace {
-    static const std::string WORD_SEPARATORS;
+    static std::string WORD_SEPARATORS;
+    bool printDuplicities;
     std::ifstream inputFile;
     std::ofstream outputFile;
 
