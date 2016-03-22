@@ -44,7 +44,15 @@ make
 
 ## Usage
 ```
-./replace <path to input text file> <path to output file name>
+./replace --help
+Search in the text file for all word or sentence duplicities, removes them and saves the text to output file
+Usage: replace [options]
+Allowed options:
+  --help                      Print usage
+  -p [ --print-duplicities ]  Enables print of duplicities to stdout
+  -s [ --separators ] arg     Set separators. Default values are " \n"
+  --input-file arg            Path to input file - mandatory argument
+  --output-file arg           Path to output file - mandatory argument
 ```
 
 ## Limitations
