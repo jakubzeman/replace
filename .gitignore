@@ -16,3 +16,6 @@ m4/
 missing
 replace
 replace.dSYM
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
