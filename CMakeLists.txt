@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 3.0.2)
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)  
 set(Boost_USE_STATIC_RUNTIME OFF) 
