@@ -37,7 +37,7 @@ void Replace::processSeparator(const std::string & word)
     if (this->compareBuffer.noSep.empty()) {
         if (this->readBuffer.output.empty())
             this->readBuffer.output += word;
-        // For more readability skip duplicities of separators ("lazy fox     jumps" is reduced to "lazy fox jumps")
+        // For more readability skip duplicates of separators ("lazy fox     jumps" is reduced to "lazy fox jumps")
         else if (1 < word.length() || (1 == word.length() && *word.begin() != *this->readBuffer.output.rbegin()))
             this->readBuffer.output += word;
     }
@@ -100,7 +100,7 @@ void Replace::processOneWord(const std::string & word)
             this->processStartup(word);
         }
         else {
-            // Add word to comparation buffer
+            // Add word to comparison buffer
             this->compareBuffer.noSep += word;
             this->compareBuffer.output += word;
             this->rollBackBuffer.push_back(word);
