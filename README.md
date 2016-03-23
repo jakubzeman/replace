@@ -58,7 +58,7 @@ Usage: replace [options] <input file> <output file>
 Allowed options:
   --help                      Print usage
   -p [ --print-duplicities ]  Enables print of duplicities to stdout
-  -s [ --separators ] arg     Set separators. Default value are $' \n'
+  -s [ --separators ] arg     Set separators. Default value is $' \n'
   --input-file arg            Path to input file - mandatory argument
   --output-file arg           Path to output file - mandatory argument
 ```

@@ -11,7 +11,7 @@ Options::Options(int argc, char *argv[])
     desc.add_options()
         ("help", "Print usage")
         ("print-duplicities,p", boost::program_options::bool_switch()->default_value(false), "Enables print of duplicities to stdout")
-        ("separators,s", boost::program_options::value<std::string>(), "Set separators. Default value are $' \\n'")
+        ("separators,s", boost::program_options::value<std::string>(), "Set separators. Default value is $' \\n'")
         ("input-file", boost::program_options::value< std::vector<std::string> >(), "Path to input file - mandatory argument")
         ("output-file", boost::program_options::value< std::vector<std::string> >(), "Path to output file - mandatory argument")
     ;
