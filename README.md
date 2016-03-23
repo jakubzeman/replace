@@ -1,5 +1,5 @@
-# Replaces duplicities in text
-==============================
+Replaces duplicities in text
+============================
 
 ## Description
 Replaces duplicities in common text for better readability.
