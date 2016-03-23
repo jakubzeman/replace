@@ -11,7 +11,7 @@ Options::Options(int argc, char *argv[])
     desc.add_options()
         ("help", "Print usage")
         ("print-duplicities,p", boost::program_options::bool_switch()->default_value(false), "Enables print of duplicities to stdout")
-        ("separators,s", boost::program_options::value<std::string>(), "Set separators. Default values are \" \\n\"")
+        ("separators,s", boost::program_options::value<std::string>(), "Set separators. Default value are $' \\n'")
         ("input-file", boost::program_options::value< std::vector<std::string> >(), "Path to input file - mandatory argument")
         ("output-file", boost::program_options::value< std::vector<std::string> >(), "Path to output file - mandatory argument")
     ;
@@ -82,6 +82,10 @@ Options::Options(int argc, char *argv[])
 
 void Options::printHelp(const std::string & appName)
 {
-    std::cout << "Search in the text file for all word or sentence duplicities, removes them and saves the text to output file" << std::endl;
-    std::cout << "Usage: " << appName << " [options]" << std::endl;
+    std::cout <<
+            "Search in the text file for all word or sentence" << std::endl <<
+            "duplicities, removes them and saves the text to" << std::endl <<
+            "output file" << std::endl << std::endl;
+
+    std::cout << "Usage: " << appName << " [options] <input file> <output file>" << std::endl;
 }

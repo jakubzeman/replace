@@ -10,6 +10,7 @@ TEST_VALS=(
 "Skakal pes pres oves.Skakal pes pres oves."
 "Skakal pes pres oves!Skakal pes pres oves?"
 "Ahoj Ahoj"
+"Skakal pes pres oves.Skakal pes pres oves."
 )
 CORR_VALS=(
 "Skakal pes přes oves.\n"
@@ -22,6 +23,20 @@ CORR_VALS=(
 "Skakal pes pres oves.Skakal pes pres oves."
 "Skakal pes pres oves!Skakal pes pres oves?"
 "Ahoj "
+"Skakal pes pres oves."
+)
+SEPARATORS=(
+$' \n'
+$' \n'
+$' \n'
+$' \n'
+$' \n'
+$' \n'
+$' \n'
+$' \n'
+$' \n'
+$' \n'
+$' .\n'
 )
 
 IDX=1
@@ -29,7 +44,8 @@ IDX=1
 for i in ${!TEST_VALS[*]} ; do
     echo -ne "${TEST_VALS[$i]}" > /tmp/test_input.txt
     echo -ne "${CORR_VALS[$i]}" > /tmp/test_right.txt
-    ./replace /tmp/test_input.txt /tmp/test_output.txt
+    #echo "./replace -p -s=\"${SEPARATORS[$i]}\" /tmp/test_input.txt /tmp/test_output.txt"
+    ./replace -p -s="${SEPARATORS[$i]}" /tmp/test_input.txt /tmp/test_output.txt
     if ! diff /tmp/test_right.txt /tmp/test_output.txt > /dev/null ; then
         echo "Test $IDX failed"
         exit 1
